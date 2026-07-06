@@ -1,50 +1,157 @@
 // ============================================================
-// js/main.js — SmartBudget
-// Lógica de interacción: modal, navegación, smooth scroll
+// main.scss — Punto de entrada principal de SmartBudget
+// Arquitectura basada en el patrón 7-1 simplificado
 // ============================================================
 
-// --- Modal ---
-function abrirModal() {
-  const modal = document.getElementById('modalContacto');
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  // Foco accesible al primer campo
-  setTimeout(() => {
-    const primerCampo = modal.querySelector('input');
-    if (primerCampo) primerCampo.focus();
-  }, 100);
+// ------------------------------------------------------------
+// 1. ABSTRACCIONES — Variables y mixins (sin output CSS)
+// ------------------------------------------------------------
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mix;
+
+// ------------------------------------------------------------
+// 2. BASE — Reset y estilos globales
+// ------------------------------------------------------------
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-function cerrarModal() {
-  const modal = document.getElementById('modalContacto');
-  modal.classList.remove('active');
-  document.body.style.overflow = '';
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
-// Cerrar con tecla Escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') cerrarModal();
-});
-
-// --- Smooth scroll en anclas internas ---
-document.querySelectorAll('a[href^="#"]').forEach((enlace) => {
-  enlace.addEventListener('click', (e) => {
-    const id = enlace.getAttribute('href');
-    if (id.length > 1 && document.querySelector(id)) {
-      e.preventDefault();
-      document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-});
-
-// --- Navbar: toggle móvil ---
-const toggle = document.querySelector('.navbar__toggle');
-const nav    = document.querySelector('.navbar__nav');
-
-if (toggle && nav) {
-  toggle.addEventListener('click', () => {
-    const abierto = nav.classList.toggle('navbar__nav--abierto');
-    toggle.setAttribute('aria-expanded', abierto);
-  });
+body {
+  font-family: var.$fuente-principal;
+  font-size: var.$tamano-base;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var.$color-texto;
+  background-color: var.$color-oscuro;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var.$fuente-titulos;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var.$color-blanco;
+}
+
+p {
+  margin-bottom: var.$espacio-md;
+  color: var.$color-muted;
+  max-width: 100%;
+}
+
+// FIX: contención global de texto en toda la app — ningún elemento debe
+// desbordar su contenedor, en escritorio, tablet o móvil.
+h1, h2, h3, h4, h5, h6,
+p, span, a, li, td, th, label, button, input {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var.$transicion-rapida;
+}
+
+// ------------------------------------------------------------
+// 3. LAYOUT — Contenedor y grid base
+// ------------------------------------------------------------
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var.$espacio-xl;
+
+  @include mix.hasta-pantalla(movil) {
+    padding: 0 var.$espacio-md;
+  }
+}
+
+.seccion {
+  padding: var.$espacio-3xl var.$espacio-xl;
+
+  @include mix.hasta-pantalla(movil) {
+    padding: var.$espacio-2xl var.$espacio-md;
+  }
+}
+
+.seccion__encabezado {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var.$espacio-2xl;
+}
+
+.seccion__eyebrow {
+  font-size: var.$tamano-xs;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var.$color-principal;
+  display: block;
+  margin-bottom: var.$espacio-md;
+}
+
+.seccion__titulo {
+  font-size: var.$tamano-2xl;
+  margin-bottom: var.$espacio-md;
+}
+
+.seccion__subtitulo {
+  font-size: var.$tamano-base;
+  color: var.$color-muted;
+  line-height: 1.7;
+}
+
+// ------------------------------------------------------------
+// 4. COMPONENTES — Importación de módulos
+// ------------------------------------------------------------
+@use 'components/tarjeta';
+@use 'components/mercados'; // módulo de mercados financieros (oro, BTC, acciones)
+@use 'components/navbar';   // NUEVO: header/navbar (antes sin partial dedicado)
+
+// ------------------------------------------------------------
+// 5. UTILIDADES — Botones globales
+// ------------------------------------------------------------
+.btn {
+  @include mix.boton-estilo(var.$color-principal, var.$color-oscuro);
+}
+
+.btn--secundario {
+  @include mix.boton-estilo(transparent, var.$color-texto);
+  border: 1.5px solid var.$color-borde;
+
+  &:hover {
+    border-color: var.$color-principal;
+    color: var.$color-principal;
+    filter: none;
+    transform: none;
+  }
+}
+
+// ------------------------------------------------------------
+// 6. RESPONSIVE — Ajustes globales por breakpoint
+// ------------------------------------------------------------
+@include mix.hasta-pantalla(tablet) {
+  h1 { font-size: var.$tamano-titulo * 0.8; }
+  h2 { font-size: var.$tamano-2xl * 0.9; }
+}
+
+@include mix.desde-pantalla(pantalla-grande) {
+  html { font-size: 17px; }
+}
