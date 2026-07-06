@@ -1,0 +1,148 @@
+// ============================================================
+// components/_tarjeta.scss
+// Componente .tarjeta — BEM + variantes para SmartBudget
+// ============================================================
+@use '../abstracts/variables' as var;
+@use '../abstracts/mixins' as mix;
+
+// ------------------------------------------------------------
+// Bloque base
+// ------------------------------------------------------------
+.tarjeta {
+  @include mix.card-base;
+  position: relative;
+  overflow: hidden;
+
+  // Efecto de brillo en hover (pseudo-elemento)
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var.$radio-lg;
+    opacity: 0;
+    transition: var.$transicion-media;
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgba(22, 199, 132, 0.08) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  &:hover {
+    border-color: rgba(22, 199, 132, 0.35);
+    transform: translateY(-4px);
+    box-shadow: var.$sombra-hover;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  // Escala el padding en escritorio
+  @include mix.desde-pantalla(escritorio) {
+    padding: var.$espacio-xl;
+  }
+}
+
+// ------------------------------------------------------------
+// Elementos BEM
+// ------------------------------------------------------------
+
+// Ícono decorativo en la parte superior
+.tarjeta__icono {
+  width: 48px;
+  height: 48px;
+  border-radius: var.$radio-md;
+  background: rgba(255, 255, 255, 0.05);
+  @include mix.flex-centro;
+  font-size: 22px;
+  margin-bottom: var.$espacio-lg;
+  position: relative;
+  z-index: 1;
+}
+
+// Cuerpo de la tarjeta
+.tarjeta__cuerpo {
+  position: relative;
+  z-index: 1;
+}
+
+// Título
+.tarjeta__titulo {
+  font-family: var.$fuente-titulos;
+  font-size: var.$tamano-lg;
+  font-weight: 700;
+  color: var.$color-blanco;
+  margin-bottom: var.$espacio-sm;
+}
+
+// Texto descriptivo
+.tarjeta__texto {
+  font-size: var.$tamano-sm;
+  color: var.$color-muted;
+  line-height: 1.7;
+}
+
+// Etiqueta / badge
+.tarjeta__etiqueta {
+  display: inline-block;
+  margin-top: var.$espacio-md;
+  font-size: var.$tamano-xs;
+  font-weight: 600;
+  color: var.$color-principal;
+  background: rgba(22, 199, 132, 0.1);
+  padding: 4px 10px;
+  border-radius: var.$radio-full;
+}
+
+// Botón dentro de la tarjeta
+.tarjeta__boton {
+  @include mix.boton-estilo(var.$color-principal, var.$color-oscuro);
+  margin-top: var.$espacio-lg;
+  width: 100%;
+  justify-content: center;
+
+  &:hover {
+    background-color: var.$color-principal-dark;
+    box-shadow: 0 8px 24px rgba(22, 199, 132, 0.35);
+  }
+}
+
+// ------------------------------------------------------------
+// Modificadores BEM — variantes
+// ------------------------------------------------------------
+
+// --destacada: borde verde, fondo con gradiente sutil
+.tarjeta--destacada {
+  border-color: rgba(22, 199, 132, 0.4);
+  background: linear-gradient(
+    145deg,
+    rgba(22, 199, 132, 0.08),
+    var.$color-superficie
+  );
+
+  .tarjeta__icono {
+    background: rgba(22, 199, 132, 0.2);
+    color: var.$color-principal;
+  }
+}
+
+// --negativa: para estadísticas de gastos
+.tarjeta--negativa {
+  .tarjeta__titulo {
+    color: var.$color-secundario;
+  }
+}
+
+// --plana: sin sombra ni hover lift (para grids de datos)
+.tarjeta--plana {
+  background: var.$color-oscuro;
+  border-color: var.$color-borde;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var.$color-borde;
+  }
+}

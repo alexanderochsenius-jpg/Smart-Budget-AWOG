@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBudget — Tus finanzas, en orden</title>
+
+  <!-- Google Fonts: Syne (títulos) + Inter (cuerpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Hoja de estilos de base -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Correcciones de Estilos (Reducción de fuentes 30% y Logo según 1000080985.png) -->
+  <style>
+    /* --- AJUSTE DE TIPOGRAFÍAS GRANDES (-30%) --- */
+    /* Modificamos los encabezados principales calculando el 70% de su tamaño estándar estimado */
+    .hero__titulo, h1 {
+      font-size: 2.8rem !important; /* Ajustado un 30% más chico para evitar que se vea gigante */
+      line-height: 1.1 !important;
+    }
+    
+    .seccion__titulo, h2 {
+      font-size: 2.1rem !important; /* Reducido un 30% para mantener jerarquía armónica */
+    }
+
+    .hero__descripcion {
+      font-size: 1.1rem !important; /* Suavizado para que acompañe bien al título */
+    }
+
+    /* --- DISEÑO DEL LOGO (Basado en la imagen 1000080985.png) --- */
+    .navbar__marca {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .navbar__marca-texto {
+      font-family: 'Syne', sans-serif !important;
+      font-weight: 800 !important; /* Peso ultra-bold como en la captura */
+      font-size: 1.6rem !important;
+      letter-spacing: -0.5px;
+      color: #ff69b4 !important; /* "Smart" en el fucsia/rosado de la imagen */
+    }
+
+    .navbar__marca-acento {
+      color: #16c784 !important; /* "Budget" en el verde esmeralda de la imagen */
+    }
+
+    /* --- ESTILOS BARRA DE FIRMA DIGITAL --- */
+    .navbar__firma {
+      display: flex;
+      align-items: center;
+      max-height: 1.5cm;
+      background-color: #9e9e9e;
+      color: #800080;
+      font-size: 13px;
+      line-height: 1.2;
+      font-family: 'Inter', sans-serif;
+      padding: 0.25rem 0.8rem;
+      border-radius: 2rem;
+      white-space: nowrap;
+      overflow-x: auto;
+      max-width: 320px;
+      scrollbar-width: thin;
+    }
+
+    .navbar__firma code {
+      color: #800080;
+      background: rgba(0, 0, 0, 0.12);
+      padding: 0 0.3rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .navbar__firma {
+        max-width: 200px;
+        font-size: 11px;
+        padding: 0.2rem 0.6rem;
+      }
+      .navbar__firma code {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar__firma {
+        max-width: 140px;
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+<div class="copyright-bar" style="background-color: #000000; color: #ff69b4; padding: 15px 30px; margin: 20px auto; border-radius: 50px; text-align: center; max-width: 900px; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(255,105,180,0.2);">
+    <div class="copyright-text" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; font-size: 0.9em;">
+        <span style="font-weight: bold;">&copy; 2026 Alexander Wolfgang Ochsenius Geis.</span>
+        <span>Curso Sence Front End Trainee, Módulo 3, Producto Digital.</span>
+        <span>Alumno del profesor Francisco Totesaut.</span>
+    </div>
+</div>
+
+<style>
+    @media (min-width: 768px) {
+        .copyright-bar {
+            flex-direction: row !important;
+            padding: 10px 40px !important;
+        }
+    }
+</style>
+
+  <!-- ================================================
+       NAVBAR
+  ================================================= -->
+  <header>
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
+      <div class="navbar__inner contenedor">
+
+        <a href="#" class="navbar__marca" aria-label="SmartBudget inicio">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="rgba(22,199,132,.15)"/>
+            <path d="M10 22V16M16 22V10M22 22V14" stroke="#16c784" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <!-- El texto ahora hereda la fuente Syne 800 y los colores exactos de la captura -->
+          <span class="navbar__marca-texto">Smart<span class="navbar__marca-acento">Budget</span></span>
+        </a>
+
+        <div class="navbar__derecha">
+          <ul class="navbar__nav">
+            <li><a href="#caracteristicas">Características</a></li>
+            <li><a href="#como-funciona">Cómo funciona</a></li>
+            <li><a href="#mercados">Mercados</a></li>
+            <li><a href="#planes">Planes</a></li>
+          </ul>
+
+          <div class="navbar__acciones">
+            <a href="#" class="btn btn--secundario btn--sm">Iniciar sesión</a>
+          </div>
+          
+          <button class="navbar__toggle" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ================================================
+         HERO — #inicio
+    ================================================= -->
+    <section id="inicio" class="hero" aria-labelledby="hero-titulo">
+      <div class="hero__inner contenedor">
+
+        <div class="hero__copia">
+          <p class="hero__eyebrow">Finanzas personales inteligentes</p>
+          <h1 class="hero__titulo" id="hero-titulo">
+            Tu dinero,<br><em>bajo control</em>
+          </h1>
+          <p class="hero__descripcion">
+            SmartBudget te da una vista clara de todos tus gastos, ingresos y
+            metas de ahorro en un solo lugar. Sin hojas de cálculo, sin confusión.
+          </p>
+          <div class="hero__cta">
+            <a href="#como-funciona" class="btn btn--secundario">Ver cómo funciona</a>
+          </div>
+          <div class="hero__prueba-social">
+            <div class="hero__avatares" aria-hidden="true">
+              <span>👩</span><span>👨</span><span>🧑</span><span>👩‍💼</span>
+            </div>
+            <p><strong>+12 000</strong> personas ya ordenaron sus finanzas</p>
+          </div>
+        </div>
+
+        <!-- Dashboard visual -->
+        <div class="hero__preview" aria-hidden="true">
+          <div class="dashboard">
+            <div class="dashboard__cabecera">
+              <span class="dashboard__etiqueta">Resumen · Junio 2026</span>
+              <span class="dashboard__fecha">Actualizado ahora</span>
+            </div>
+
+            <div class="dashboard__balance">
+              <p class="dashboard__balance-label">Balance disponible</p>
+              <p class="dashboard__balance-valor">$4 250.00</p>
+              <span class="dashboard__cambio">↑ 8.3% vs. mes anterior</span>
+            </div>
+
+            <div class="dashboard__mini-stats">
+              <div class="tarjeta tarjeta--plana">
+                <p class="tarjeta__texto">Ingresos</p>
+                <p class="tarjeta__titulo" style="color:#16c784">$6 800</p>
+              </div>
+              <div class="tarjeta tarjeta--plana">
+                <p class="tarjeta__texto">Gastos</p>
+                <p class="tarjeta__titulo tarjeta__titulo--negativo">$2 550</p>
+              </div>
+            </div>
+
+            <div class="dashboard__grafico" role="img" aria-label="Gráfico de gastos por mes">
+              <span style="height:40%"></span>
+              <span style="height:65%"></span>
+              <span style="height:50%"></span>
+              <span style="height:80%"></span>
+              <span style="height:60%"></span>
+              <span class="activo" style="height:90%"></span>
+            </div>
+          </div>
+
+          <div class="tx-flotante">
+            <div class="tx-flotante__icono">💸</div>
+            <div class="tx-flotante__info">
+              <p>Ahorro automático</p>
+              <span>hace 2 min</span>
+            </div>
+            <strong class="tx-flotante__monto">+$120</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================
+         CARACTERÍSTICAS
+    ================================================= -->
+    <section id="caracteristicas" class="seccion" aria-labelledby="feat-titulo">
+      <div class="contenedor">
+        <header class="seccion__encabezado">
+          <span class="seccion__eyebrow">Características</span>
+          <h2 class="seccion__titulo" id="feat-titulo">Todo lo que necesitas para tomar mejores decisiones</h2>
+          <p class="seccion__subtitulo">Herramientas diseñadas para que entiendas tu dinero, no para que te pierdas en números.</p>
+        </header>
+
+        <div class="grid-caracteristicas">
+          <article class="tarjeta" aria-labelledby="feat-1">
+            <div class="tarjeta__icono" aria-hidden="true">📊</div>
+            <div class="tarjeta__cuerpo">
+              <h3 class="tarjeta__titulo" id="feat-1">Dashboard visual</h3>
+              <p class="tarjeta__texto">Gráficos interactivos que muestran tus gastos por categoría, tendencias mensuales y proyecciones de ahorro en tiempo real.</p>
+              <span class="tarjeta__etiqueta">Tiempo real</span>
+            </div>
+          </article>
+
+          <article class="tarjeta tarjeta--destacada" aria-labelledby="feat-2">
+            <div class="tarjeta__icono" aria-hidden="true">🤖</div>
+            <div class="tarjeta__cuerpo">
+              <h3 class="tarjeta__titulo" id="feat-2">Alertas inteligentes</h3>
+              <p class="tarjeta__texto">SmartBudget detecta patrones inusuales y te avisa antes de que superes tu presupuesto mensual en cualquier categoría.</p>
+              <span class="tarjeta__etiqueta">IA incluida</span>
+            </div>
+          </article>
+
+          <article class="tarjeta" aria-labelledby="feat-3">
+            <div class="tarjeta__icono" aria-hidden="true">🎯</div>
+            <div class="tarjeta__cuerpo">
+              <h3 class="tarjeta__titulo" id="feat-3">Metas de ahorro</h3>
+              <p class="tarjeta__texto">Define objetivos y visualiza tu progreso con un seguimiento automático cada semana.</p>
+              <span class="tarjeta__etiqueta">Seguimiento</span>
+            </div>
+          </article>
+
+          <article class="tarjeta" aria-labelledby="feat-4">
+            <div class="tarjeta__icono" aria-hidden="true">🔗</div>
+            <div class="tarjeta__cuerpo">
+              <h3 class="tarjeta__titulo" id="feat-4">Sincronización bancaria</h3>
+              <p class="tarjeta__texto">Conecta tus cuentas bancarias de forma segura. Los movimientos se importan y categorizan solos.</p>
+              <span class="tarjeta__etiqueta">Cifrado 256-bit</span>
+            </div>
+          </article>
+
+          <article class="tarjeta" aria-labelledby="feat-5">
+            <div class="tarjeta__icono" aria-hidden="true">📱</div>
+            <div class="tarjeta__cuerpo">
+              <h3 class="tarjeta__titulo" id="feat-5">Responsivo y accesible</h3>
+              <p class="tarjeta__texto">Funciona perfectamente en móvil, tablet y escritorio. Construido respetando los estándares WCAG 2.1.</p>
+              <span class="tarjeta__etiqueta">Multiplataforma</span>
+            </div>
+          </article>
+
+          <article class="tarjeta" aria-labelledby="feat-6">
+            <div class="tarjeta__icono" aria-hidden="true">📤</div>
+            <div class="tarjeta__cuerpo">
+              <h3 class="tarjeta__titulo" id="feat-6">Exportar reportes</h3>
+              <p class="tarjeta__texto">Genera informes mensuales en PDF o CSV para llevar el control con tu contador o archivar tu historial.</p>
+              <span class="tarjeta__etiqueta">PDF · CSV</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         CÓMO FUNCIONA
+    ================================================= -->
+    <section id="como-funciona" class="seccion seccion--alternada" aria-labelledby="proceso-titulo">
+      <div class="contenedor">
+        <header class="seccion__encabezado">
+          <span class="seccion__eyebrow">Cómo funciona</span>
+          <h2 class="seccion__titulo" id="proceso-titulo">En tres pasos sencillos</h2>
+          <p class="seccion__subtitulo">Empezar no requiere conocimientos financieros. Solo necesitas diez minutos.</p>
+        </header>
+
+        <div class="grid-proceso">
+          <div class="paso">
+            <div class="paso__numero" aria-hidden="true">1</div>
+            <h3 class="paso__titulo">Crea tu cuenta</h3>
+            <p class="paso__descripcion">Regístrate con tu correo en menos de un minuto. Sin tarjeta de crédito para el plan gratuito.</p>
+          </div>
+          <div class="paso">
+            <div class="paso__numero" aria-hidden="true">2</div>
+            <h3 class="paso__titulo">Conecta tus cuentas</h3>
+            <p class="paso__descripcion">Enlaza tus cuentas bancarias de forma segura y deja que SmartBudget importe tus transacciones.</p>
+          </div>
+          <div class="paso">
+            <div class="paso__numero" aria-hidden="true">3</div>
+            <strong class="paso__titulo" style="display:block; font-size:1.2rem; margin-bottom:10px;">Toma el control</strong>
+            <p class="paso__descripcion">Revisa tu dashboard, define metas y recibe alertas. Tú decides, SmartBudget te informa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         PLANES
+    ================================================= -->
+    <section id="planes" class="seccion" aria-labelledby="planes-titulo">
+      <div class="contenedor">
+        <header class="seccion__encabezado">
+          <span class="seccion__eyebrow">Planes</span>
+          <h2 class="seccion__titulo" id="planes-titulo">Sin sorpresas en la factura</h2>
+          <p class="seccion__subtitulo">Elige el plan que se ajusta a tu situación. Cambia cuando quieras.</p>
+        </header>
+
+        <div class="grid-planes">
+          <div class="plan">
+            <p class="plan__nombre">Gratis</p>
+            <p class="plan__precio"><sup>$</sup>0</p>
+            <p class="plan__ciclo">Para siempre</p>
+            <ul class="plan__lista">
+              <li>1 cuenta bancaria</li>
+              <li>Dashboard básico</li>
+              <li>Historial de 3 meses</li>
+              <li>2 metas de ahorro</li>
+            </ul>
+            <a href="#" class="btn btn--secundario btn--bloque" onclick="abrirModal(); return false;">Empezar gratis</a>
+          </div>
+
+          <div class="plan plan--destacado">
+            <span class="plan__badge">Más popular</span>
+            <p class="plan__nombre">Pro</p>
+            <p class="plan__precio"><sup>$</sup>9<small>.90</small></p>
+            <p class="plan__ciclo">por mes · facturado anualmente</p>
+            <ul class="plan__lista">
+              <li>Cuentas ilimitadas</li>
+              <li>Dashboard completo con IA</li>
+              <li>Historial indefinido</li>
+              <li>Metas de ahorro ilimitadas</li>
+              <li>Alertas inteligentes</li>
+              <li>Exportar PDF y CSV</li>
+            </ul>
+            <a href="#" class="btn btn--bloque" onclick="abrirModal(); return false;">Probar 14 días gratis</a>
+          </div>
+
+          <div class="plan">
+            <p class="plan__nombre">Familia</p>
+            <p class="plan__precio"><sup>$</sup>17<small>.90</small></p>
+            <p class="plan__ciclo">por mes · hasta 5 miembros</p>
+            <ul class="plan__lista">
+              <li>Todo lo de Pro</li>
+              <li>5 perfiles independientes</li>
+              <li>Vista compartida del hogar</li>
+              <li>Soporte prioritario</li>
+            </ul>
+            <a href="#" class="btn btn--secundario btn--bloque" onclick="abrirModal(); return false;">Empezar prueba</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         MERCADOS FINANCIEROS
+    ================================================= -->
+    <section id="mercados" class="seccion mercados" aria-labelledby="mercados-titulo">
+      <div class="contenedor">
+        <header class="seccion__encabezado">
+          <span class="seccion__eyebrow">Mercados</span>
+          <h2 class="seccion__titulo" id="mercados-titulo">Pulso del mercado, en un vistazo</h2>
+          <p class="seccion__subtitulo">Oro, Bitcoin y las acciones más relevantes para que entiendas el contexto antes de invertir.</p>
+        </header>
+
+        <div class="mercados__grid">
+          <div class="mercados__panel" aria-labelledby="oro-titulo">
+            <div class="mercados__panel-cabecera">
+              <h3 class="mercados__panel-titulo" id="oro-titulo"><span aria-hidden="true">🥇</span> Oro (XAU/USD)</h3>
+              <span class="mercados__variacion mercados__variacion--positiva">↑ 0.42%</span>
+            </div>
+            <p class="mercados__precio">$2 348.60 <small style="font-size:0.875rem; color:#8b949e;">USD/oz</small></p>
+            <p class="mercados__meta">Precio spot · Actualizado: 29 jun 2026, 09:15 (hora local)</p>
+          </div>
+
+          <div class="mercados__panel" aria-labelledby="btc-titulo">
+            <div class="mercados__panel-cabecera">
+              <h3 class="mercados__panel-titulo" id="btc-titulo"><span aria-hidden="true">₿</span> Bitcoin (BTC)</h3>
+              <span class="mercados__variacion mercados__variacion--negativa">↓ 1.18%</span>
+            </div>
+            <p class="mercados__precio">$61 240.00</p>
+            <p class="mercados__meta">Tendencia: <strong style="color:#e6edf3;">bajista (corto plazo)</strong> · Actualizado hace 5 min</p>
+          </div>
+        </div>
+
+        <div class="mercados__tabla-wrap" role="region" aria-label="Tabla de empresas de gran capitalización" tabindex="0">
+          <table class="mercados__tabla">
+            <thead>
+              <tr>
+                <th scope="col">Empresa</th>
+                <th scope="col">Ticker</th>
+                <th scope="col">Precio aprox.</th>
+                <th scope="col">Variación diaria</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Microsoft<span class="mercados__ticker">MSFT</span></td>
+                <td>NASDAQ</td>
+                <td>$452.30</td>
+                <td><span class="mercados__variacion mercados__variacion--positiva">↑ 0.65%</span></td>
+              </tr>
+              <tr>
+                <td>Apple<span class="mercados__ticker">AAPL</span></td>
+                <td>NASDAQ</td>
+                <td>$214.80</td>
+                <td><span class="mercados__variacion mercados__variacion--negativa">↓ 0.21%</span></td>
+              </tr>
+              <tr>
+                <td>NVIDIA<span class="mercados__ticker">NVDA</span></td>
+                <td>NASDAQ</td>
+                <td>$138.95</td>
+                <td><span class="mercados__variacion mercados__variacion--positiva">↑ 2.04%</span></td>
+     
